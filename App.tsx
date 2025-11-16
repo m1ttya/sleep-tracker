@@ -871,31 +871,22 @@ const ProfileScreen: React.FC<{
 
 
 const BottomNav: React.FC<{ activeScreen: Screen; setScreen: (screen: Screen) => void }> = ({ activeScreen, setScreen }) => {
-    const navItems = [
+    const leftItems = [
         { screen: 'LEARN', icon: LearnIcon, label: 'Обучение' },
         { screen: 'STATS', icon: StatsIcon, label: 'Статистика' },
-        { screen: 'HOME', icon: HomeIcon, label: 'Главная' },
+    ];
+    const rightItems = [
         { screen: 'PROFILE', icon: ProfileIcon, label: 'Профиль' },
         { screen: 'SETTINGS', icon: SettingsIcon, label: 'Настройки' },
     ];
+    const homeItem = { screen: 'HOME', icon: HomeIcon, label: 'Главная' };
 
     return (
-        <nav className="bg-card border-t border-border">
-            <div className="flex justify-around items-center h-20 px-2">
-                {navItems.map(item => {
-                    if (item.screen === 'HOME') {
-                        return (
-                            <button
-                                key={item.screen}
-                                onClick={() => setScreen('HOME')}
-                                aria-label={item.label}
-                                className={`w-16 h-16 -mt-8 rounded-full flex items-center justify-center transition-all duration-300 ${activeScreen === 'HOME' ? 'bg-primary text-primary-foreground shadow-app-md' : 'bg-card text-muted-foreground shadow-app'}`}
-                            >
-                                <item.icon className="w-9 h-9" />
-                            </button>
-                        );
-                    }
-                    return (
+        <nav className="bg-card border-t border-border h-20 relative">
+            <div className="flex justify-between items-center h-full px-4">
+                {/* Left items */}
+                <div className="flex justify-around w-full">
+                    {leftItems.map(item => (
                         <button
                             key={item.screen}
                             onClick={() => setScreen(item.screen as Screen)}
@@ -904,8 +895,33 @@ const BottomNav: React.FC<{ activeScreen: Screen; setScreen: (screen: Screen) =>
                         >
                             <item.icon className="w-8 h-8" />
                         </button>
-                    );
-                })}
+                    ))}
+                </div>
+
+                {/* Right items */}
+                <div className="flex justify-around w-full">
+                     {rightItems.map(item => (
+                        <button
+                            key={item.screen}
+                            onClick={() => setScreen(item.screen as Screen)}
+                            aria-label={item.label}
+                            className={`p-2 rounded-full transition-colors duration-300 ${activeScreen === item.screen ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+                        >
+                            <item.icon className="w-8 h-8" />
+                        </button>
+                    ))}
+                </div>
+            </div>
+            
+            {/* Absolutely positioned Home button */}
+            <div className="absolute left-1/2 top-0 -translate-x-1/2">
+                 <button
+                    onClick={() => setScreen('HOME')}
+                    aria-label={homeItem.label}
+                    className={`w-16 h-16 -mt-8 rounded-full flex items-center justify-center transition-all duration-300 ${activeScreen === 'HOME' ? 'bg-primary text-primary-foreground shadow-app-md' : 'bg-card text-muted-foreground shadow-app'}`}
+                >
+                    <homeItem.icon className="w-9 h-9" />
+                </button>
             </div>
         </nav>
     );

@@ -75,3 +75,12 @@
 .shadow-app, .shadow-app-md, .shadow-app-lg, .shadow-app-xl {
   box-shadow: 0px 4px 4px #00000030, 0px 12px 12px #00000015;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
